@@ -102,3 +102,27 @@ Involves **direct interaction** with the target systems (port scanning, service 
 Google dorking uses advanced search operators to find exposed information indexed by Google (files, login pages, error messages, misconfigurations...).
 
 See the dedicated file **[`dork.md`](./dork.md)** for a comprehensive list of dorks.
+
+**Note**
+- Wayback Machine : https://web.archive.org/ for target old versions of the target
+
+## Active Reconnaissance
+
+### Dns zone transfers
+
+| DNS Records | Purpose |
+|---|---|
+| A | Resolve a hostname or domaine to an ipv4 addresses |
+| AAAA | Resolve a hostname or domaine to an ipv6 addresses| 
+| NS | Reference to the domaine nameserver |
+| MX | Resolve domain to a mail server |
+| CNAME | Used for domain aliases |
+| TXT | Text record |
+| HIFO | Host iformation |
+| SOA | Domain authority |
+| SRV | Service record |
+| PTR | Resolve an IP address to a hostname |
+
+**Note**
+- `dnsenum` and `dig` commands can also return some interesting stuff
+- check for `fierce` command for more
