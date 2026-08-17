@@ -43,16 +43,32 @@ nmap -Pn -F <target>    # Fast scan on the 100 most common ports instead of the 
 nmap -Pn -sT <target>   # TCP connect scan
 nmap -Pn -sS <target>   # SYN scan (stealthier than -sT)
 nmap -Pn -sC <target>   # Run default NSE scripts (same as --script=default)
+nmap -Pn --traceroute <target>  # Trace the network path to the target
 ```
 
-## Services version & OS detection
+---
 
-Goal:
+## Service Version & OS Detection
+
+Goal: fingerprint the OS and identify exact service versions on open ports.
 
 ```bash
-nmap -T4 -sS -sV -p- <target>  # Service and version detection
-nmap -T4 -sS -sV -O -p- <target>  # No exact OS match but give us a TCP/IP fringerprint
-nmap -T4 -sS -sV -O -p- <target>  # No exact OS match but give us a TCP/IP fringerprint
-nmap -T4 -sS -sV --version-intensity <level> -O --osscan-guess -p- <target>  # version intensity 0-8
+nmap -T4 -sS -sV -p- <target>       # Service and version detection
 
+nmap -T4 -sS -sV -O -p- <target>    # No exact OS match, but provides a TCP/IP fingerprint
+
+nmap -T4 -sS -sV --version-intensity <level> -O --osscan-guess -p- <target>  # Version intensity 0-8 (higher = more accurate, slower)
+```
+
+### Nmap Scripting Engine (NSE)
+
+```bash
+nmap -T4 -sS -sV -sC -p- <target>          # Run default NSE scripts on open ports
+
+ls /usr/share/nmap/scripts                  # List all available scripts
+nmap --script-help=<script>                 # Show details about a specific script
+
+nmap -T4 -sS -sV --script=<script> -p- <target>                    # Run a specific script on open ports
+nmap -T4 -sS -sV --script=<script>,<another_script> -p- <target>   # Run multiple scripts on open ports
+nmap -T4 -sS -sV --script=ftp-* -p- <target>                       # Run all FTP-related scripts
 ```
