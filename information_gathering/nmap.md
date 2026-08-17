@@ -96,8 +96,3 @@ nmap --top-ports 100 <IP>  # Scan the 100 most common ports
 - Use **NSE scripts** to automate vulnerability discovery.
 - Adjust speed (`-T`) depending on context (fast for CTFs vs. stealthy for pentests).
 - Save results for later analysis and comparison.
-
----
-
-**Note**
-- you can also map the network with `netdiscover` command Ex : `netdiscover -r <IP range>`
