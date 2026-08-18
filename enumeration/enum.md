@@ -72,12 +72,40 @@ run
 ```
 
 ## FTP Enumeration
+
 ```bash
-use scanner/portscan/tcp <target> #
-search type:auxiliary name:ftp # 
-use auxiliary/scanner/ftp/ftp_version # ftp version detection
-search ProFTPD # witch is vulnerable version of ftp
-use auxiliary/scanner/ftp/ftp_login # authetication scanner
-set USER_FILE /usr/share/metasploiit-framework/data/wordlist/common_users.txt #
+use auxiliary/scanner/portscan/tcp
+set RHOSTS <target>
+run
+# Confirm which ports are open on the target before diving into FTP-specific enumeration
+
+search type:auxiliary name:ftp
+# Search MSF's module database for all auxiliary modules related to FTP
+
+use auxiliary/scanner/ftp/ftp_version
+# FTP version detection — banner-grabs the FTP daemon version, useful to match against known vulnerabilities
+
+search ProFTPD
+# Search for exploits/info related to ProFTPD, a commonly vulnerable FTP server software (many known CVEs across versions)
+
+use auxiliary/scanner/ftp/ftp_login
+# Authentication scanner — attempts to brute-force valid FTP credentials
+
+set USER_FILE /usr/share/metasploit-framework/data/wordlists/common_users.txt
+# Path to the username wordlist used by the login scanner
+
 set PASS_FILE <path>
+# Path to the password wordlist used by the login scanner (e.g. /usr/share/metasploit-framework/data/wordlists/common_passwords.txt)
+
+set RHOSTS <target>
+run
+# Set the target and launch the brute-force attempt
+```
+
+**Note:**
+- Anonymous FTP login (`anonymous:anonymous` or blank password) is a very common misconfiguration — always test this manually first before brute-forcing:
+```bash
+ftp <target>
+# Username: anonymous
+# Password: anonymous (or blank)
 ```
