@@ -124,3 +124,7 @@ nmap -Pn -sS -F -T4 <target> -oG nmap_grep.txt
 nmap -Pn -sS -F -T4 <target> -oA nmap_all
 # Output in all three major formats at once (normal, XML, grepable) using a shared filename prefix
 ```
+
+## Port scannong with Auxiliary Module
+**Note**
+- Auxiliary Modules are used to perform functionality like scanning, discovery and fuzzing
