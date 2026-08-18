@@ -70,3 +70,14 @@ set RHOSTS <target_range>
 run
 # Execute the currently loaded and configured module
 ```
+
+## FTP Enumeration
+```bash
+use scanner/portscan/tcp <target> #
+search type:auxiliary name:ftp # 
+use auxiliary/scanner/ftp/ftp_version # ftp version detection
+search ProFTPD # witch is vulnerable version of ftp
+use auxiliary/scanner/ftp/ftp_login # authetication scanner
+set USER_FILE /usr/share/metasploiit-framework/data/wordlist/common_users.txt #
+set PASS_FILE <path>
+```
