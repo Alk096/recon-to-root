@@ -37,3 +37,36 @@ vulns
 # List vulnerabilities discovered and recorded in the current workspace
 ```
 
+## Port Scanning with Auxiliary Modules
+
+**Note**
+- Auxiliary Modules are used to perform functionality like scanning, discovery, and fuzzing.
+
+```bash
+search portscan
+# Search MSF's module database for available port scanning modules
+
+use auxiliary/scanner/portscan/<syn|ack|tcp>
+# Load a specific port scanning module (SYN, ACK, or TCP connect scan)
+
+show options
+# Display the required/optional settings for the currently loaded module
+
+run autoroute -s <target>
+# Run the autoroute Meterpreter script to pivot: adds a route through the compromised host so MSF can scan/reach the internal network behind it (run from within a Meterpreter session)
+
+use auxiliary/scanner/portscan/tcp
+# Load the TCP port scan module — typically used after backgrounding the Meterpreter session (Ctrl+Z), so the newly added route via autoroute can be leveraged to scan the pivoted network
+
+use auxiliary/scanner/discovery/udp_sweep
+# Load the UDP sweep module to discover live hosts/services over UDP
+
+set RHOST <target>
+# Set the target IP/range for the currently loaded module
+
+set RHOSTS <target_range>
+# Set multiple targets (subnet/range) — most scanner modules use RHOSTS rather than RHOST
+
+run
+# Execute the currently loaded and configured module
+```
