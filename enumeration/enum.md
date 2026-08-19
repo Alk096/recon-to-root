@@ -109,3 +109,18 @@ ftp <target>
 # Username: anonymous
 # Password: anonymous (or blank)
 ```
+
+## SMB Enumeration
+
+```bash
+setg RHOST <target> # setg allow us to set a global variable
+search type:auxiliary name:smb # 
+auxiliary/scanner/smb/smb_version #
+auxiliary/scanner/smb/smbenumusers #
+auxiliary/scanner/smb/smbenumshares # it's may allow us to see folders/files share on the smb sever
+auxiliary/scanner/smb/smb_login # 
+info # 
+
+smbclient -L \\\\<target>\\ -U <user> #
+smbclient \\\\<target>\\<share?> -U <user> 
+```
