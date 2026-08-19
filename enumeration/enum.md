@@ -214,3 +214,27 @@ loot
 creds
 # MSF command — lists all credentials discovered/stored in the current workspace database
 ```
+
+## SSH Enumeration
+```bash
+setg RHOSTS <target>
+# Set a global variable for the target IP address to avoid retyping RHOSTS across different Metasploit modules
+
+search type:auxiliary name:ssh
+# Search MSF's module database for all SSH-related auxiliary modules
+
+use auxiliary/scanner/ssh/ssh_version
+# SSH version detection — banner-grabs the SSH server/daemon version without requiring credentials
+
+use auxiliary/scanner/ssh/ssh_enumusers
+# User enumeration — exploits timing differences in SSH auth responses to guess valid usernames (works on some vulnerable OpenSSH versions)
+
+use auxiliary/scanner/ssh/ssh_login
+# Authentication scanner — brute-forces SSH credentials with username/password (automatically opens a session on success)
+
+use auxiliary/scanner/ssh/ssh_login_pubkey
+# Public key authentication scanner — tests a private key file against the target to see if it grants SSH access
+
+/bin/bash -i
+# Spawn an interactive bash shell — commonly used to upgrade a raw/limited shell into a fully interactive one after gaining access
+```
