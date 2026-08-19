@@ -113,14 +113,45 @@ ftp <target>
 ## SMB Enumeration
 
 ```bash
-setg RHOST <target> # setg allow us to set a global variable
-search type:auxiliary name:smb # 
-auxiliary/scanner/smb/smb_version #
-auxiliary/scanner/smb/smbenumusers #
-auxiliary/scanner/smb/smbenumshares # it's may allow us to see folders/files share on the smb sever
-auxiliary/scanner/smb/smb_login # 
-info # 
+setg RHOSTS <target>
+# Set a global variable for the target IP address to avoid retyping RHOSTS across different Metasploit modules
 
-smbclient -L \\\\<target>\\ -U <user> #
-smbclient \\\\<target>\\<share?> -U <user> 
+search type:auxiliary name:smb
+# Search MSF's module database for all SMB-related scanner and enumeration auxiliary modules
+
+use auxiliary/scanner/smb/smb_version
+# SMB version detection — identifies the exact version of the running SMB/Samba service
+
+use auxiliary/scanner/smb/smb_enumusers
+# User enumeration — attempts to enumerate valid domain or local user accounts on the host
+
+use auxiliary/scanner/smb/smb_enumshares
+# Share enumeration — lists available network shares and their read/write access permissions
+
+use auxiliary/scanner/smb/smb_login
+# Authentication scanner — tests credential combinations or performs brute-force attacks against SMB
+
+info
+# Displays detailed documentation, required options, and settings for the active module
+
+nmap -Pn -sV --script smb-os-discovery <target>
+# Nmap discovery — skips ping host discovery (-Pn), identifies service versions (-sV), and extracts OS details via SMB
+
+smbclient -L \\\\<target>\\ -U <user>
+# Lists all available network shares on the target using specific user credentials
+
+smbclient \\\\<target>\\<share> -U <user>
+# Connects directly to a specific share using the provided user credentials
+
+smbclient -L \\\\<target>\\ -N
+# Anonymous smbclient test — attempts to list network shares without providing credentials (Null Session)
+
+rpcclient -U "" -N <target>
+# Null Session test via rpcclient — verifies whether the SMB server permits unauthenticated RPC access
+
+srvinfo
+# Interactive rpcclient command — displays server details including hostname, OS, and domain information
+
+enumdomusers
+# Interactive rpcclient command — enumerates all domain or local users registered on the server
 ```
