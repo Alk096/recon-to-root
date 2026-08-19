@@ -184,3 +184,33 @@ use auxiliary/scanner/http/apache_userdir_enum
 use auxiliary/scanner/http/http_login
 # HTTP authentication scanner — brute-forces credentials against HTTP Basic/Digest authentication login forms
 ```
+
+## MySQL Enumeration
+```bash
+search type:auxiliary name:mysql
+# Search MSF's module database for all MySQL-related auxiliary modules
+
+use auxiliary/scanner/mysql/mysql_version
+# MySQL version detection — banner-grabs the MySQL server version without requiring credentials
+
+use auxiliary/scanner/mysql/mysql_login
+# Authentication scanner — brute-forces MySQL credentials (requires username/username_file and pass/pass_file options)
+
+use auxiliary/admin/mysql/mysql_enum
+# Enumerates MySQL server info (users, privileges, password hashes, config variables) — requires valid MySQL credentials
+
+use auxiliary/admin/mysql/mysql_sql
+# Executes arbitrary SQL commands against the server — requires valid MySQL credentials
+
+use auxiliary/scanner/mysql/mysql_schemadump
+# Dumps the full database schema (databases, tables, columns) — requires valid MySQL credentials
+
+services
+# MSF command — lists all services discovered and stored in the current workspace database
+
+loot
+# MSF command — lists collected loot (dumped files, hashes, schemas, etc. saved during the engagement)
+
+creds
+# MSF command — lists all credentials discovered/stored in the current workspace database
+```
