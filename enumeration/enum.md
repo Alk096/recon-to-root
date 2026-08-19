@@ -111,7 +111,6 @@ ftp <target>
 ```
 
 ## SMB Enumeration
-
 ```bash
 setg RHOSTS <target>
 # Set a global variable for the target IP address to avoid retyping RHOSTS across different Metasploit modules
@@ -154,4 +153,34 @@ srvinfo
 
 enumdomusers
 # Interactive rpcclient command — enumerates all domain or local users registered on the server
+```
+
+## Web Server Enumeration
+```bash
+search type:auxiliary name:http
+# Search MSF's module database for all HTTP-related auxiliary modules
+
+setg RHOSTS <target>
+# Set a global variable for the target IP address to avoid retyping RHOSTS across different Metasploit modules
+
+use auxiliary/scanner/http/http_version
+# HTTP version detection — identifies the web server software and version via banner/response fingerprinting
+
+use auxiliary/scanner/http/http_header
+# Header scanner — retrieves and displays the full set of HTTP response headers (can reveal server, framework, cookies, security headers)
+
+use auxiliary/scanner/http/robots_txt
+# Robots.txt scanner — fetches and parses robots.txt, revealing paths the admin wants excluded from search engines (often a good recon lead)
+
+use auxiliary/scanner/http/dir_scanner
+# Directory scanner — brute-forces common directory names to discover hidden/unlinked paths on the web server
+
+use auxiliary/scanner/http/files_dir
+# File scanner — brute-forces common filenames within directories to discover exposed files
+
+use auxiliary/scanner/http/apache_userdir_enum
+# Apache user directory enumeration — checks for the presence of ~username personal directories (mod_userdir), useful for username enumeration
+
+use auxiliary/scanner/http/http_login
+# HTTP authentication scanner — brute-forces credentials against HTTP Basic/Digest authentication login forms
 ```
