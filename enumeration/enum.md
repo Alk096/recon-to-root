@@ -238,3 +238,25 @@ use auxiliary/scanner/ssh/ssh_login_pubkey
 /bin/bash -i
 # Spawn an interactive bash shell — commonly used to upgrade a raw/limited shell into a fully interactive one after gaining access
 ```
+
+## SMTP Enumeration
+
+```bash
+setg RHOSTS <target>
+# Set a global variable for the target IP address to avoid retyping RHOSTS across different Metasploit modules
+
+search type:auxiliary name:smtp
+# Search MSF's module database for all SMTP-related auxiliary modules
+
+use auxiliary/scanner/smtp/smtp_version
+# SMTP version detection — banner-grabs the mail server daemon version and type
+
+use auxiliary/scanner/smtp/smtp_enum
+# User enumeration — checks for valid system usernames using standard SMTP commands (VRFY, EXPN, or RCPT TO)
+
+use auxiliary/scanner/smtp/smtp_relay
+# Open relay scanner — tests if the SMTP server is misconfigured to allow unauthorized mail relaying (potential spam vector)
+
+use auxiliary/scanner/smtp/smtp_login
+# Authentication scanner — brute-forces SMTP login credentials (AUTH LOGIN/PLAIN) against the mail server
+```
